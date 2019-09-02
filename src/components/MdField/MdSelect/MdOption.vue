@@ -67,9 +67,10 @@
     },
     methods: {
       getTextContent (children) {
+        let that = this;
         return children.map(function (node) {
           return node.children
-                  ? this.getTextContent(node.children)
+                  ? that.getTextContent(node.children)
                   : node.text
         }).join('')
       },
