@@ -66,14 +66,12 @@
       }
     },
     methods: {
-      getTextContent () {
-        if (this.$el) {
-          return this.$el.textContent.trim()
-        }
-
-        const slot = this.$slots.default
-
-        return slot ? slot[0].text.trim() : ''
+      getTextContent (children) {
+        return children.map(function (node) {
+          return node.children
+                  ? getChildrenTextContent(node.children)
+                  : node.text
+        }).join('')
       },
       setIsSelected () {
         if (!this.isMultiple) {
@@ -102,7 +100,7 @@
         }
       },
       setItem () {
-        this.$set(this.MdSelect.items, this.key, this.getTextContent())
+        this.$set(this.MdSelect.items, this.key, this.getTextContent(this.$slots.default))
       }
     },
     updated () {
