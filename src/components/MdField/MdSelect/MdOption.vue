@@ -69,7 +69,7 @@
       getTextContent (children) {
         return children.map(function (node) {
           return node.children
-                  ? getChildrenTextContent(node.children)
+                  ? this.getTextContent(node.children)
                   : node.text
         }).join('')
       },

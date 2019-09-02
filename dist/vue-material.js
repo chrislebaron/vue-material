@@ -9898,7 +9898,7 @@ exports.default = {
   methods: {
     getTextContent: function getTextContent(children) {
       return children.map(function (node) {
-        return node.children ? getChildrenTextContent(node.children) : node.text;
+        return node.children ? this.getTextContent(node.children) : node.text;
       }).join('');
     },
     setIsSelected: function setIsSelected() {
