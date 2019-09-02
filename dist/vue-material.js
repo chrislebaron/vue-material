@@ -1,5 +1,5 @@
 /*!
- * vue-material v1.0.0-beta-10.2
+ * vue-material v1.0.0-beta-11
  * Made with <3 by marcosmoura 2019
  * Released under the MIT License.
  */
@@ -9896,14 +9896,10 @@ exports.default = {
     }
   },
   methods: {
-    getTextContent: function getTextContent() {
-      if (this.$el) {
-        return this.$el.textContent.trim();
-      }
-
-      var slot = this.$slots.default;
-
-      return slot ? slot[0].text.trim() : '';
+    getTextContent: function getTextContent(children) {
+      return children.map(function (node) {
+        return node.children ? getChildrenTextContent(node.children) : node.text;
+      }).join('');
     },
     setIsSelected: function setIsSelected() {
       if (!this.isMultiple) {
@@ -9932,7 +9928,7 @@ exports.default = {
       }
     },
     setItem: function setItem() {
-      this.$set(this.MdSelect.items, this.key, this.getTextContent());
+      this.$set(this.MdSelect.items, this.key, this.getTextContent(this.$slots.default));
     }
   },
   updated: function updated() {
